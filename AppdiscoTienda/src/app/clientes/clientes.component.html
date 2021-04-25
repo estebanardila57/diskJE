@@ -1,0 +1,78 @@
+<!-- seccion de la navbar -->
+
+<section>
+    <app-navbar></app-navbar> 
+</section>
+
+<!-- seccion de la tabla -->
+<section class="tabla">
+    <div class="container" id="advanced-search-form">
+        <ng-container *ngIf="!crearCliente; else formClientes"> 
+            <button type="button" class="btn btn-dark btn-sm" (click)="crearCliente=true">Ver Clientes</button>
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Documento</th>
+                  <th>Dirección</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of lstCliente">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.nombrecli }}</td>
+                  <td>{{ item.cedulacli }}</td>
+                  <td>{{ item.telefonocli }}</td>
+                  <td>{{ item.direccioncli }}</td>
+                  <td>
+                      <button type="button" class="btn btn-dark btn-sm" (click)="editCliente(item)">Editar</button>
+                      <button type="button" class="btn btn-outline-danger btn-sm" style="margin-left: 1%;" (click)="deleteCliente(item)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+</ng-container>
+
+<ng-template #formClientes>
+    <button type="button" class="btn btn-dark btn-sm" (click)="crearCliente = false">Ver clientes</button>
+    <form [formGroup]="formulario">
+        <div class="form-group row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Nombres</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" formControlName="nombrecli" id="staticEmail" placeholder="Nombres">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Cedula</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" formControlName="cedulacli" placeholder="Cedula">
+          </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Telefono</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control"  formControlName="telefonocli" placeholder="Telefono">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Dirección</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control"  formControlName="direccioncli" placeholder="Dirección">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <button type="button"  class="btn btn-secondary" (click)="Addcliente()" >Guardar</button>
+                <button type="button"  class="btn btn-secondary" (click)="Updatecliente()"  >Editar</button>
+                <button type="button" class="btn btn-outline-dark" style="margin-left: 2%;" (click)="Deletecliente()">Eliminar</button>
+            </div>
+          </div>
+      </form>
+  </ng-template>
+
+</div>
+</section>

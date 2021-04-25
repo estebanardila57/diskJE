@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppiDiscotienda", "WebAppiDiscotienda\WebAppiDiscotienda.csproj", "{28C1E18C-678B-4C81-A82B-E8DCFD1977FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28C1E18C-678B-4C81-A82B-E8DCFD1977FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28C1E18C-678B-4C81-A82B-E8DCFD1977FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28C1E18C-678B-4C81-A82B-E8DCFD1977FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28C1E18C-678B-4C81-A82B-E8DCFD1977FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2464133-C679-4B78-B541-CABC81AA124A}
+	EndGlobalSection
+EndGlobal
