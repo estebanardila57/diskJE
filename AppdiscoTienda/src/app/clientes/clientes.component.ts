@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import { Cliente } from '../models/cliente';
 import { ApiClienteService } from '../services/api-cliente.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clientes',
@@ -14,6 +15,8 @@ export class ClientesComponent implements OnInit {
   lstCliente:any;
   dtOptions:DataTables.Settings={};
   cliente:Cliente={}as Cliente;
+  btneditar:boolean=false;
+  submitted:boolean=false;
 
   constructor(private formbuilder:FormBuilder,private apiCliente:ApiClienteService) { }
   formulario=this.formbuilder.group({
@@ -32,6 +35,19 @@ export class ClientesComponent implements OnInit {
     this.GetCliente();
   }
 
+  //estamos renombrando el formulario para dejarlo con este alias para citarlo con mas facilidad en el html
+get f() {return this.formulario.controls}
+
+  mostrarclinete(){
+     this.btneditar=false;
+     this.crearCliente=true;
+     this.resetformulario();
+  }
+
+  resetformulario(){
+    this.formulario.reset();
+  }
+
   /* Metodo para  leer los clientes */
   GetCliente(){
     this.apiCliente.getCliente().subscribe(response=>{
@@ -41,46 +57,83 @@ export class ClientesComponent implements OnInit {
   }
   /* TERMINA Metodo para leer los clientes */
 
-  //Metodo que me recibe un cliente y sus valores se los asigna a los controles del formulario 
 
-    deleteCliente(oCliente:Cliente){
-    this.formulario.controls.nombrecli.setValue(oCliente.nombrecli)
-    this.formulario.controls.cedulacli.setValue(oCliente.cedulacli)
-    this.formulario.controls.telefonocli.setValue(oCliente.telefonocli)
-    this.formulario.controls.direccioncli.setValue(oCliente.direccioncli)
-    this.crearCliente=true;
-      this.cliente.id=oCliente.id
-     }
     
- /* Metodo para eliminar un cliente */   
-    Deletecliente(){
-      this.cliente=Object.assign(this.cliente,this.formulario.value);
-      this.apiCliente.deletecliente(this.cliente).subscribe(response=>{
+ /* Metodo para edesactivar un cliente */   
+ DesactivarCliente(cliente:Cliente){
+  Swal.fire({
+    title: 'Cliente',
+    text: '¿Desea cambiar el estado del cliente?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, Cambiar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.value) {
+    
+      this.apiCliente.desactivarcliente(cliente.id).subscribe(response=>{
         if(response.codEx==0){
           console.log(response.mensaje);
+   
         }
-        alert(response.codEx);
+        Swal.fire({
+          title: 'Disco',
+          text: 'El estado del disco se cambió con exito',
+          icon: 'success',
+          showCancelButton: false,
+        })
+        
         this.GetCliente();
         this.crearCliente=false;
-        this.limpieza();
+        
       })
+
     }
+  })
+  
+
+}
 /* TERMINA Metodo para eliminar cliente */
 
 //Metodo para agregar clientes
  Addcliente(){
-   console.log(this.formulario.value)   
+   this.submitted=true;
+   if(this.formulario.invalid){
+     return 
+   }
    this.cliente=Object.assign(this.cliente,this.formulario.value);
-   console.log(this.cliente);
-   this.apiCliente.addCliente(this.cliente).subscribe(response=>{
-     if(response.codEx==0){
-       console.log(response.mensaje);
-     }
-     alert(response.codEx)
-     this.GetCliente();
-    this.crearCliente=false;
-     this.limpieza();
-   })
+   Swal.fire({
+    title: 'Cliente',
+    text: '¿Desea guardar el cliente?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, guardar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.value) {
+
+      this.apiCliente.addCliente(this.cliente).subscribe(response=>{
+        if(response.codEx==0){
+          console.log(response.mensaje);
+        }
+        
+        Swal.fire({
+          title: 'Cliente',
+          text: 'El cliente se guardo con exito',
+          icon: 'success',
+          showCancelButton: false,
+        })
+        
+        this.GetCliente();
+       this.crearCliente=false;
+        this.resetformulario();
+      })
+
+
+  
+    }
+  })
+  
  }
 //Termina metodo para agregar clientes
 
@@ -93,30 +146,51 @@ export class ClientesComponent implements OnInit {
   this.formulario.controls.direccioncli.setValue(oCliente.direccioncli)
   this.crearCliente=true;
   this.cliente.id=oCliente.id
+  this.btneditar=true;
   }
 
+ 
 //Metodo para actualizar clientes
-
  Updatecliente(){
-  this.cliente=Object.assign(this.cliente,this.formulario.value);
-  this.apiCliente.updateCliente(this.cliente).subscribe(response=> {
-    if(response.codEx==0){
-      alert("Ocurrio un error por"+response.mensaje);
+  
+
+  this.submitted=true;
+   if(this.formulario.invalid){
+     return 
+   }
+
+   this.cliente=Object.assign(this.cliente,this.formulario.value);
+
+  Swal.fire({
+    title: 'Cliente',
+    text: '¿Desea actualizar la información del cliente?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, guardar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.value) {
+      this.apiCliente.updateCliente(this.cliente).subscribe(response=> {
+        if(response.codEx==0){
+          alert("Ocurrio un error por"+response.mensaje);
+        }
+        Swal.fire({
+          title: 'Cliente',
+          text: 'El cliente se actualizó con exito',
+          icon: 'success',
+          showCancelButton: false,
+        })
+        this.GetCliente();
+        this.crearCliente=false;
+      
+      })
+
     }
-    alert(response.codEx)
-    this.GetCliente();
-    this.crearCliente=false;
-    this.limpieza();
   })
+ 
  }
 //Termina Metodo para acutalizar cliente
  
-// metodo que me ayuda a limipiar los valores del formulario 
-limpieza(){
-  this.formulario.controls.nombrecli.setValue("")
-    this.formulario.controls.cedulacli.setValue("")
-    this.formulario.controls.telefonocli.setValue("")
-    this.formulario.controls.direccioncli.setValue("")
-}
+
 
 }

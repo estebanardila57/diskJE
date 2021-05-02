@@ -4,4 +4,5 @@ export class Cliente{
     cedulacli:number;
     telefonocli:number;
     direccioncli:string;
+    estado:boolean;
     }

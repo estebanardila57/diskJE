@@ -13,5 +13,7 @@ namespace proyectodisctienda.Models
         public int Telefonocli { get; set; }
         public string Direccioncli { get; set; }
 
+        public bool Estado { get; set; }
+
     }
 }

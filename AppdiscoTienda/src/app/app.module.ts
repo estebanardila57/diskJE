@@ -10,6 +10,7 @@ import {DataTablesModule} from "angular-datatables";
 import {FormsModule} from "@angular/forms";
 import{ReactiveFormsModule}from "@angular/forms";
 import {HttpClientModule} from '@angular/common/http';
+import { DiscosComponent } from './discos/discos.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {HttpClientModule} from '@angular/common/http';
     ClientesComponent,
     HomeComponent,
     InfoserviceComponent,
-    NavbarComponent    
+    NavbarComponent,
+    DiscosComponent    
   ],
   imports: [
     BrowserModule,

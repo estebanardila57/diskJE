@@ -11,5 +11,7 @@ namespace proyectodisctienda.Models
         public string Genero { get; set; }
         public string Descripcioncd { get; set; }
         public int Cantidad { get; set; }
+
+        public bool Estado { get; set; }
     }
 }

@@ -31,7 +31,7 @@ export class ApiClienteService {
     return this._http.put<Respuesta>(this.url+'cliente',cliente,httpOption)
   }
 
-    deletecliente(cliente:Cliente):Observable<Respuesta>{
-    return this._http.delete<Respuesta>(this.url+"cliente/"+cliente.id)
+   desactivarcliente(id:any):Observable<Respuesta>{
+    return this._http.delete<Respuesta>(this.url+"cliente/"+id)
   } 
 }

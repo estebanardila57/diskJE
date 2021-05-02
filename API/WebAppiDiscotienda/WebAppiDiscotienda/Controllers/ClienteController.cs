@@ -52,6 +52,7 @@ namespace WebAppiDiscotienda.Controllers
                 clien.Cedulacli = oCLiente.Cedulacli;
                 clien.Telefonocli = oCLiente.Telefonocli;
                 clien.Direccioncli = oCLiente.Direccioncli;
+                clien.Estado = true;
                 _mybasecontext.Clientes.Add(clien);
                 _mybasecontext.SaveChanges();// cuando lo agrege guarde los cambios en la base de daos
                 res.CodEx = 1;
@@ -100,7 +101,15 @@ namespace WebAppiDiscotienda.Controllers
             try
             {
                 var clien = _mybasecontext.Clientes.Find(id);// me vas a tomar un objeto de tipo Clientes y me los va a buscar , si lo encontraste ,ahora toma los nuevos campos y eemplazalos porla nueva informacio
-                _mybasecontext.Clientes.Remove(clien);
+                if (clien.Estado)
+                {
+                    clien.Estado = false;
+                }
+                else
+                {
+                    clien.Estado = true;
+                }
+                _mybasecontext.Clientes.Update(clien);
                 _mybasecontext.SaveChanges();// cuando lo agrege guarde los cambios en la base de daos
                 res.CodEx = 1;
                 res.mensaje = "Cliente eliminado exitosament";
